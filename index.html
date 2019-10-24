@@ -20,19 +20,8 @@
                 </li>
             </ul>
             <h2 class='title'>
-                    <table class ='titleTable'>
-                            <thead>
-                                    <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>State</th>
-                                    <th>Catch</th>
-                                    <th>Create</th>
-                                    <th>Update</th>
-                                    </tr>
-                            </thead>
-                    </table>
+                   
+       
             </h2>
             <div id ='results'>
                 <table class ='table'></table>
@@ -82,7 +71,19 @@
              let html = data.map( result => {
             // companies filter
                if(result.catchPhrase) {
-                return `<tr> 
+                return `
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>State</th>
+                        <th>Catch</th>
+                        <th>Create</th>
+                        <th>Update</th>
+                        </tr>
+                    
+                    </tr> 
+                    <tr>
                     <td>${result.id}</td>
                     <td>${result.name}</td>
                     <td>${result.phone}</td>
@@ -93,7 +94,19 @@
                     </tr>`
                 }
                 else{
-                    return `<tr> 
+                    return `
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>State</th>
+                        <th>Create</th>
+                        <th>Update</th>
+                        </tr>
+                    
+                    </tr> 
+                    
+                    <tr> 
                     <td>${result.id}</td>
                     <td>${result.name}</td>
                     <td>${result.description}</td>
