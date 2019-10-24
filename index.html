@@ -19,12 +19,12 @@
                     </a>
                 </li>
             </ul>
-            <h2 class='title'>
-                   
-       
-            </h2>
+
             <div id ='results'>
-                <table class ='table'></table>
+
+                <table class ='table'>
+                    
+                </table>
             </div>
         </div>
     </body>
@@ -56,30 +56,34 @@
          .then(response => response.data)
          .then( data => {
             console.log(data)
-            // let titles = [
-            //     {
-            //         id:'id',
-            //         title:'title',
-            //         phone:'phone',
-            //         state:'state',
-            //         catch:'catchPhrase', 
-            //         create:'created At', 
-            //         update:'updated At'
-            //     }]
-
+            let titles = 
+                {
+                    id:'id',
+                    name:'title',
+                    description:'phone',
+                    suggestedPrice:'state',
+                    catchPhrase:'catchPhrase', 
+                    createdAt:'created At', 
+                    updatedAt:'updated At'
+                }
             
+
+             let count = 0
              let html = data.map( result => {
             // companies filter
+                count++
+               
                if(result.catchPhrase) {
+                if(count === 1){
                 return `
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Phone</th>
                         <th>State</th>
-                        <th>Catch</th>
-                        <th>Create</th>
-                        <th>Update</th>
+                        <th>Catch Phrase</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
                         </tr>
                     
                     </tr> 
@@ -96,12 +100,26 @@
                 else{
                     return `
                     <tr>
+                    <td>${result.id}</td>
+                    <td>${result.name}</td>
+                    <td>${result.phone}</td>
+                    <td>${result.state}</td>
+                    <td>${result.catchPhrase}</td>
+                    <td>${result.createdAt}</td>
+                    <td>${result.updatedAt}</td>
+                    </tr>`
+                }
+                }
+                else{
+                    if(count === 1){
+                    return `
+                    <tr>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Phone</th>
                         <th>State</th>
-                        <th>Create</th>
-                        <th>Update</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
                         </tr>
                     
                     </tr> 
@@ -115,8 +133,19 @@
                     <td>${result.updatedAt}</td>
                     </tr>`
                 }
+                else{
+                   return `<tr> 
+                    <td>${result.id}</td>
+                    <td>${result.name}</td>
+                    <td>${result.description}</td>
+                    <td>${result.suggestedPrice}</td>
+                    <td>${result.createdAt}</td>
+                    <td>${result.updatedAt}</td>
+                    </tr>`
+                }
+                }
              }).join('')
-             
+            
              document.querySelector('.table').innerHTML = html
          }).catch( e => console.log(e))
 
