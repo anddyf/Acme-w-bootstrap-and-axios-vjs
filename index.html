@@ -1,1 +1,116 @@
-index
+<html>
+    <head>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js'></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
+    </head>
+    <body>
+        <div class ='container'>
+            <h1>Acme with Bootstrap and Axios</h1>
+            <ul class='nav nav-tabs'>
+                <li class ='nav-item'>
+                    <a class='nav-link companies' id= 'companiesLink' href = '#companies'>
+                        Companies
+                    </a>
+                </li>
+                <li class ='nav-item'>
+                    <a class='nav-link products' id= 'productsLink' href = '#products'>
+                        Products
+                    </a>
+                </li>
+            </ul>
+            <h2 class='title'>
+                    <table class ='titleTable'>
+                            <thead>
+                                    <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>State</th>
+                                    <th>Catch</th>
+                                    <th>Create</th>
+                                    <th>Update</th>
+                                    </tr>
+                            </thead>
+                    </table>
+            </h2>
+            <div id ='results'>
+                <table class ='table'></table>
+            </div>
+        </div>
+    </body>
+    <script>
+
+    let products = 'https://acme-users-api-rev.herokuapp.com/api/products'
+    let companies = 'https://acme-users-api-rev.herokuapp.com/api/companies'
+    let nav = document.querySelector('.nav-item')
+    let id = ''
+    window.addEventListener('hashchange', ev => {
+    id = window.location.hash.slice(1)
+    console.log(id)
+    if(id === 'companies'){
+        loadData(companies)
+    }
+    if(id === 'products'){
+        loadData(products)
+    }
+    })
+    
+
+
+    const loadData = (page) => {
+       //<!-- we typically call axios using .get() or similar method -->
+        if(page === undefined){
+            page = products
+        }
+       axios.get(page)
+         .then(response => response.data)
+         .then( data => {
+            console.log(data)
+            // let titles = [
+            //     {
+            //         id:'id',
+            //         title:'title',
+            //         phone:'phone',
+            //         state:'state',
+            //         catch:'catchPhrase', 
+            //         create:'created At', 
+            //         update:'updated At'
+            //     }]
+
+            
+             let html = data.map( result => {
+            // companies filter
+               if(result.catchPhrase) {
+                return `<tr> 
+                    <td>${result.id}</td>
+                    <td>${result.name}</td>
+                    <td>${result.phone}</td>
+                    <td>${result.state}</td>
+                    <td>${result.catchPhrase}</td>
+                    <td>${result.createdAt}</td>
+                    <td>${result.updatedAt}</td>
+                    </tr>`
+                }
+                else{
+                    return `<tr> 
+                    <td>${result.id}</td>
+                    <td>${result.name}</td>
+                    <td>${result.description}</td>
+                    <td>${result.suggestedPrice}</td>
+                    <td>${result.createdAt}</td>
+                    <td>${result.updatedAt}</td>
+                    </tr>`
+                }
+             }).join('')
+             
+             document.querySelector('.table').innerHTML = html
+         }).catch( e => console.log(e))
+
+     }
+     loadData();
+
+
+    </script>
+
+</html>
